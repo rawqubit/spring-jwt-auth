@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: spring-jwt-auth
+  datasource:
+    url: jdbc:h2:mem:jwtauthdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081
+
+# JWT Configuration
+# IMPORTANT: Replace this secret with a secure 256-bit Base64-encoded key in production.
+# Generate with: openssl rand -base64 32
+jwt:
+  secret: ${JWT_SECRET:dGhpcy1pcy1hLXZlcnktc2VjdXJlLXNlY3JldC1rZXktZm9yLWp3dC1hdXRo}
+  access-token-expiry-ms: 900000    # 15 minutes
+  refresh-token-expiry-ms: 604800000 # 7 days
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.rawqubit: DEBUG
+    root: INFO
